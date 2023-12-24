@@ -10,4 +10,6 @@ Certifique-se de ter o [Tampermonkey](https://www.tampermonkey.net/) instalado e
 
 - **Balanceador Automático**
     - **Descrição:** Script legalizado de balanceio de recursos com versão automatizada.
-    - **Link para instalação:** [Balanceador Automático](https://raw.githubusercontent.com/p4ulinho/Scripts-Premium-TribalWars/main/Scripts/Balanceador.user.js)
+    - **Link para instalação:** [Balanceador Automático](https://raw.githubusercontent.com/p4ulinho/Scripts-Premium-TribalWars/blob/main/Scripts/Balanceador.user.js)
+ 
+    
