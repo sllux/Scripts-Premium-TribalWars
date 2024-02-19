@@ -1,23 +1,25 @@
 // ==UserScript==
 // @name           Agendador de Comandos
 // @author         PaulinhoTutoriais
-// @include        **place*
-// @include        **info_village*
-// @include        **map*
-// @include        **memo*
-// @include        **combined*
-// @include        **prod*
-// @exclude        **scavenge*
-// @exclude        **place&mode=sim*
-// @exclude        **place&mode=units*
-// @exclude        **place&mode=call*
-// @exclude        **place&mode=templates*
+// @include        **game.php*place*
+// @include        **game.php*info_village*
+// @include        **game.php*map*
+// @include        **game.php*memo*
+// @include        **game.php*combined*
+// @include        **game.php*prod*
+// @exclude        **game.php*scavenge*
+// @exclude        **game.php*place&mode=sim*
+// @exclude        **game.php*place&mode=units*
+// @exclude        **game.php*place&mode=call*
+// @exclude        **game.php*place&mode=templates*
 // @exclude        **snob*
+// @downloadURL    https://github.com/p4ulinho/Scripts-Premium-TribalWars/raw/main/UserScripts/Agendador-Comandos.user.js
+// @updateURL      https://github.com/p4ulinho/Scripts-Premium-TribalWars/raw/main/UserScripts/Agendador-Comandos.user.js
 // @icon           https://www.dl.dropboxusercontent.com/scl/fi/93px3rbj21zx3863m0g40/letter-p.png?rlkey=yyoejfwogbl9rdw0p2fmft8lr&dl=0
 // ==/UserScript==
 
 $.ajax({
-    url: "https://api-users.herokuapp.com/api/user/auth/place",
+    url: "https://paulinhoscripts.com.br/api/user/auth/place",
     type: "POST",
     contentType: "application/json",
     cache: true,
@@ -44,3 +46,5 @@ $.ajax({
         setTimeout(() => { location.reload(); }, 5000);
     }
 });
+
+
