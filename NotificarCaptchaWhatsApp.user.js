@@ -5,6 +5,7 @@
 
 const telefone = ''
 const sairDaPagina = false;
+const alertaSonoro = false;
 
 function enviarRequisicaoWhatsapp() {
   const urlWhatsapp = '';
@@ -51,11 +52,17 @@ function verificarElemento() {
       const ultimoEnvio = localStorage.getItem("envioDoCaptcha");
       if (!ultimoEnvio || (Date.now() - parseInt(ultimoEnvio)) >= 10 * 60000) {
         enviarRequisicaoWhatsapp();
+
+        if (alertaSonoro) {
+          const audio = new Audio('https://www.dl.dropboxusercontent.com/s/jhq0ttowdmyy21b/audioAttackArriving.mp3?dl=0');
+          audio.play();
+        }
         
         if(sairDaPagina){
           setTimeout( () => {
             location.assign("https://google.com.br");
           }, 10000);
+        }
         
         localStorage.setItem("envioDoCaptcha", Date.now().toString());
       } else {
