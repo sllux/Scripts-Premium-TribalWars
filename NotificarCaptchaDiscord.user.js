@@ -1,12 +1,18 @@
 // ==UserScript==
-// @name         Notificações Captcha Discord
+// @name         Notificações Captcha Discord e Alarme Repetido
 // @include      **game*
 // ==/UserScript==
 
 const sairDaPagina = false;
+const urlSomAlarme = 'https://cdn.freesound.org/previews/196/196838_3629620-lq.mp3'; // Substitua pela URL do seu arquivo de áudio
+
+function tocarAlarme() {
+  const audio = new Audio(urlSomAlarme);
+  audio.play().catch(e => console.error("Erro ao tentar tocar o alarme:", e));
+}
 
 function enviarRequisicaoWebhook() {
-  const urlWeebhook = '';
+  const urlWeebhook = ''; // Coloque a URL do Webhook do Discord aqui
 
   const dataAtual = new Date().toLocaleString();
   const mensagem = `Surgiu um captcha na sua conta ${game_data.player.name}, no horário: ${dataAtual} na URL ${location.href}`;
@@ -37,29 +43,48 @@ function enviarRequisicaoWebhook() {
     });
 }
 
-function verificarElemento() {
+let alarmeInterval = null;
+let alreadyCaptcha = false;
+
+function verificarElementoEIniciarAlarme() {
   const interval = setInterval(function() {
     if (document.querySelector('#botprotection_quest')) {
-      console.log('Elemento existe!');
+      alreadyCaptcha = true;
+      console.log('Captcha detectado!');
       clearInterval(interval);
 
       const ultimoEnvio = localStorage.getItem("envioDoCaptcha");
-      if (!ultimoEnvio || (Date.now() - parseInt(ultimoEnvio)) >= 10 * 60000) {
+      if (!ultimoEnvio || (Date.now() - parseInt(ultimoEnvio)) >= 1 * 60000) {
         enviarRequisicaoWebhook();
+      }
 
-        if(sairDaPagina){
-          setTimeout( () => {
-            location.assign("https://google.com.br");
-          }, 10000);
-        }
+      if (!alarmeInterval) {
+        alarmeInterval = setInterval(tocarAlarme, 0.1 * 60000);
+      }
+
+      if (sairDaPagina) {
+        setTimeout(() => {
+          location.assign("https://google.com.br");
+        }, 10000);
       }
     }
   }, 1000);
-
-  setTimeout(function() {
-    clearInterval(interval);
-    console.log('Verificação interrompida após 2500 ms.');
-  }, 2500);
 }
 
-verificarElemento();
+function verificarResolucaoCaptcha() {
+  const verificaCaptchaResolvido = setInterval(() => {
+    if (!document.querySelector('#botprotection_quest') && alreadyCaptcha) {
+      alreadyCaptcha = false;
+      clearInterval(verificaCaptchaResolvido);
+      if (alarmeInterval) {
+        clearInterval(alarmeInterval);
+        alarmeInterval = null;
+      }
+    }else{
+      verificarElementoEIniciarAlarme();
+    }
+  }, 5000);
+}
+
+verificarElementoEIniciarAlarme();
+verificarResolucaoCaptcha();
