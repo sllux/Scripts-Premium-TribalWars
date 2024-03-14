@@ -157,7 +157,7 @@ const interface_notifications = `
     </tr>
     <tr>
     <td>Salvar Configurações</td>
-    <td><button id="save-settings" class="btn" onclick="saveOptions()">Salvar Configurações</button></td>
+    <td><button id="save-settings" class="btn">Salvar Configurações</button></td>
 </tr>
 </table>
 `
@@ -165,6 +165,10 @@ loadWorldSettings.insertAdjacentHTML('afterend', interface_notifications);
 
 document.querySelectorAll('.toggle-slider input').forEach(function(input) {
     input.addEventListener('change', saveOptions);
+});
+
+document.querySelector('#save-settings').addEventListener('click', function () {
+    saveOptions();
 });
 
 function saveOptions() {
